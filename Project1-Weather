@@ -1,0 +1,49 @@
+import json, requests
+import time
+base_url = "https://api.openweathermap.org/data/2.5/weather"
+api_key = "8d5e9ea67860a967e9bd3c14e7aba5ab"
+degree_sign = u'\N{DEGREE SIGN}'
+
+
+inp = input("Choose 1(City) or 2(Zip Code) or 3(exit): ")
+if inp == "1":
+  print("You chose City")
+  user_input1 = input("Enter City (Ex: Bellevue,NE,USA): ")
+elif inp == "2":
+  print("You chose Zip Code")
+  user_input2 = int(input("Enter Zip Code (Ex: 68123): "))
+  query = "zip=" + user_input2
+elif inp == "3":
+  exit()
+else: 
+  print("Not a valid choice please try again") 
+
+def mainWeather():
+  try:
+      weather_data=requests.get(f"https://api.openweathermap.org/data/2.5/weather?{query}&units=imperial&APPID={api_key}")
+      print(weather_data.json())
+      if weather_data.json() ['cod'] != '200':
+        raise Exception("Invalid Entry")
+      if user_input2 < 10000 or user_input2 > 99999:
+        raise Exception("Invalid zip")
+  except:
+      print("Invalid Entry. Please try again.")
+  else: 
+    weather = weather_data.json()['weather'][0]['main']
+    temp = weather_data.json()['main']['temp']
+    min_temp = int(weather_data.json()['main']['temp_min'])
+    max_temp = int(weather_data.json()['main']['temp_max'])
+    pressure = weather_data.json()['main']['pressure']
+    humidity = weather_data.json()['main']['humidity']
+    wind = weather_data.json()['wind']['speed']
+    sunrise = time.strftime("%H:%M:%S", 
+    time.localtime(int(weather_data.json()['sys']  ['sunrise'])))
+    sunset = time.strftime("%H:%M:%S", 
+    time.localtime(int(weather_data.json()['sys']  ['sunset'])))
+    
+    final_info = "\n" + weather + "\n" + str(temp) + degree_sign
+    final_data = "Max_Temp: " + str(max_temp) + "\n" + "Min_Temp: " + str(min_temp) + "\n" +\
+    "Pressure: " + str(pressure) + "\n" + "Humidity:" + str(humidity) + "\n" + "Wind Speed: " + str(wind) + "\n" "Sunrise: " + sunrise + "\n" + "Sunset: " + sunset
+    print (final_info)
+    print (final_data)
+mainWeather()
