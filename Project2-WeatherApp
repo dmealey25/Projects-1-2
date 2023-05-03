@@ -1,7 +1,4 @@
-# Damien Mealey and Rodrigo Moreno
-# Computer Science 2
-# 5/2/2023
-# Weather App
+# Damien Mealey and Rodrigo Moreno Final Project 2
 
 import json
 import requests
