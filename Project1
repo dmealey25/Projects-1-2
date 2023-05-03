@@ -1,1 +1,32 @@
-placeholder
+def main():
+    numstudents = int(input("Total number of students: "))
+    while numstudents == 0:
+        numstudents = int(input("Total number of students: "))
+
+    score = input(f'Enter {numstudents} score(s): ').split()
+    while len(score) < numstudents:
+        score = input(f'Enter {numstudents} score(s): ').split()
+
+    while len(score) > numstudents:
+        score.pop()
+
+    score = [int(x) for x in score]
+
+    for n in range(numstudents):
+        weighted_score = score[n]
+
+        if weighted_score >= 90:
+            letter_grade = "A"
+        elif weighted_score >= 80:
+            letter_grade = "B"
+        elif weighted_score >= 70:
+            letter_grade = "C"
+        elif weighted_score >= 60:
+            letter_grade = "D"
+        else:
+            letter_grade = "F"
+
+        print(f'Student {n + 1} score is {weighted_score} and grade is {letter_grade}')
+
+
+main()
