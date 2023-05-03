@@ -1,3 +1,5 @@
+# Damien Mealey and Rodrigo Moreno Final Project 1
+
 def main():
     numstudents = int(input("Total number of students: "))
     while numstudents == 0:
