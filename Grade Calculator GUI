@@ -1,0 +1,86 @@
+import tkinter as tk
+
+
+class GradeCalculatorGUI:
+
+    def __init__(self, master):
+        self.master = master
+        master.title("Grade Calculator")
+
+        self.num_students_label = tk.Label(master, text="Enter the number of students:")
+        self.num_students_label.pack()
+
+        self.num_students_entry = tk.Entry(master)
+        self.num_students_entry.pack()
+
+        self.create_entries_button = tk.Button(master, text="Create Entries", command=self.create_entries)
+        self.create_entries_button.pack()
+
+        self.calculate_button = tk.Button(master, text="Calculate", command=self.calculate)
+        self.calculate_button.pack()
+
+        self.final_grades_label = tk.Label(master, text="")
+        self.final_grades_label.pack()
+
+        self.entries = []
+
+    def create_entries(self):
+        try:
+            num_students = int(self.num_students_entry.get())
+
+            # Remove any previous entries
+            for entry in self.entries:
+                entry.destroy()
+
+            self.entries = []
+
+            # Create grade entries for each student
+            for i in range(num_students):
+                grade_label = tk.Label(self.master, text=f"Enter grade for student {i+1}:")
+                grade_label.pack()
+
+                grade_entry = tk.Entry(self.master)
+                grade_entry.pack()
+
+                self.entries.append(grade_entry)
+
+        except ValueError:
+            pass
+
+    def calculate(self):
+        try:
+            final_grades = []
+            letter_grades = []
+
+            # Calculate final grade and letter grade for each student
+            for entry in self.entries:
+                grade = float(entry.get())
+                final_grades.append(grade)
+
+                if grade >= 90:
+                    letter_grade = "A"
+                elif grade >= 80:
+                    letter_grade = "B"
+                elif grade >= 70:
+                    letter_grade = "C"
+                elif grade >= 60:
+                    letter_grade = "D"
+                else:
+                    letter_grade = "F"
+                letter_grades.append(letter_grade)
+
+            # Display final and letter grades
+            final_grades_text = "Final Grades:\n"
+            letter_grades_text = "Letter Grades:\n"
+            for i, (final_grade, letter_grade) in enumerate(zip(final_grades, letter_grades)):
+                final_grades_text += f"Student {i+1}: {final_grade:.2f}\n"
+                letter_grades_text += f"Student {i+1}: {letter_grade}\n"
+            self.final_grades_label.config(text=f"{final_grades_text}\n{letter_grades_text}")
+
+        except ValueError:
+            self.final_grades_label.config(text="Invalid input")
+
+
+root = tk.Tk()
+my_gui = GradeCalculatorGUI(root)
+root.mainloop()
