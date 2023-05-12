@@ -22,6 +22,9 @@ class GradeCalculatorGUI:
         self.final_grades_label = tk.Label(master, text="")
         self.final_grades_label.pack()
 
+        self.clear_button = tk.Button(master, text="Clear", command=self.clear)
+        self.clear_button.pack()
+
         self.entries = []
 
     def create_entries(self):
@@ -30,7 +33,8 @@ class GradeCalculatorGUI:
 
             # Remove any previous entries
             for entry in self.entries:
-                entry.destroy()
+                entry[0].destroy()
+                entry[1].destroy()
 
             self.entries = []
 
@@ -42,7 +46,7 @@ class GradeCalculatorGUI:
                 grade_entry = tk.Entry(self.master)
                 grade_entry.pack()
 
-                self.entries.append(grade_entry)
+                self.entries.append((grade_label, grade_entry))
 
         except ValueError:
             pass
@@ -54,16 +58,17 @@ class GradeCalculatorGUI:
 
             # Calculate final grade and letter grade for each student
             for entry in self.entries:
-                grade = float(entry.get())
-                final_grades.append(grade)
+                grade = float(entry[1].get())
+                final_grade = grade
+                final_grades.append(final_grade)
 
-                if grade >= 90:
+                if final_grade >= 90:
                     letter_grade = "A"
-                elif grade >= 80:
+                elif final_grade >= 80:
                     letter_grade = "B"
-                elif grade >= 70:
+                elif final_grade >= 70:
                     letter_grade = "C"
-                elif grade >= 60:
+                elif final_grade >= 60:
                     letter_grade = "D"
                 else:
                     letter_grade = "F"
@@ -79,6 +84,14 @@ class GradeCalculatorGUI:
 
         except ValueError:
             self.final_grades_label.config(text="Invalid input")
+
+    def clear(self):
+        self.num_students_entry.delete(0, 'end')
+        for entry in self.entries:
+            entry[0].destroy()
+            entry[1].destroy()
+        self.entries = []
+        self.final_grades_label.config(text="")
 
 
 root = tk.Tk()
