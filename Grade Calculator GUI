@@ -1,3 +1,8 @@
+# Damien Mealey and Rodrigo Moreno
+# Computer Science 2
+# 5/12/2023
+# Grade Calculator GUI
+
 import tkinter as tk
 
 
